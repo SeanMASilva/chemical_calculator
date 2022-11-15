@@ -1,0 +1,10 @@
+{"WindowName":"Chemical Reaction Calculator",
+"SubscriptOffset":-4,
+"HistoryTextPadY": 4,
+"HistoryLinePadY": 2,
+"HistoryMaxLines":15,
+
+"MoleLinePadY": 4,
+"MoleNamePadY": 2,
+"MoleInfoPadX": 1,
+"MoleInfoPadY": 2}
