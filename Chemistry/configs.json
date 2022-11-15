@@ -2,9 +2,10 @@
 "SubscriptOffset":-4,
 "HistoryTextPadY": 4,
 "HistoryLinePadY": 2,
-"HistoryMaxLines":15,
+"HistoryMaxLines":14,
 
 "MoleLinePadY": 4,
 "MoleNamePadY": 2,
 "MoleInfoPadX": 1,
-"MoleInfoPadY": 2}
+"MoleInfoPadY": 2,
+"MoleMaxLines": 3}

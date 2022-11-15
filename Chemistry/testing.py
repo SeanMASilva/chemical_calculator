@@ -1,5 +1,5 @@
 from __future__ import annotations
-from history_ADT import HistoryList
+from linkedlist import DoublLinkdList
 from chemical_calculator import App, ElementList, MoleculeStorage
 from ptable import ELEMENT_DICT, ELEMENTS, Element
 import unittest
@@ -10,7 +10,7 @@ class TestCases(unittest.TestCase):
 
     def test_History_ADT(self):
         
-        histlist = HistoryList()
+        histlist = DoublLinkdList()
         for i in range(10):
             histlist.append(i)
         for i in range (11,20):

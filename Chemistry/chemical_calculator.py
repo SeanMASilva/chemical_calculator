@@ -1,8 +1,9 @@
 from __future__ import annotations
 import tkinter as tk
 from tkinter import ttk
-from ctypes import windll
-from history_ADT import HistoryList
+#from ctypes import windll
+from linkedlist import DoublLinkdList
+from scrollable_texts import ScrollFrames
 from expression_tree import TreeNode
 from ptable import ELEMENTS, ELEMENT_DICT, Element
 
@@ -27,9 +28,9 @@ class App():
         #create user input
         #create exit button
         #create table of elements
-        self.root = tk.Tk("root") 
+        self.root = tk.Tk() 
         self.root.title(configs["WindowName"])
-        self.root.geometry("800x500+0+0")
+        self.root.geometry("800x510+0+0")
         self.root.rowconfigure(0, weight=9)
         self.root.rowconfigure(1, weight=1)
         self.root.grid_columnconfigure((0,1), weight=1, uniform= 1)
@@ -53,7 +54,7 @@ class App():
         self.history = ttk.Frame(self.root, padding=5, borderwidth=3, relief="solid")
         self.history.grid(row=0, column=0, stick=tk.SW)
         self.history.grid_columnconfigure(0, weight=1)
-        self.history_lines = HistoryList()
+        self.history_lines = DoublLinkdList()
 
         self.history_scroll_bar = ttk.Scrollbar(self.history, command=self.scroll_history)
         self.history_scroll_bar.grid(column=1, rowspan=configs["HistoryMaxLines"],sticky=tk.NSEW)
@@ -85,11 +86,12 @@ class App():
         self.moles.rowconfigure(10)
         self.moles.grid(row=0, column=1, sticky=tk.NSEW)
         self.moles.grid_columnconfigure(0, weight=1)
-        self.moles_lines = HistoryList()
+        self.moles_lines = ScrollFrames(self.moles, configs["MoleMaxLines"])
+        self.moles_lines.root.grid(row=0, column=0)
 
     def add_mole(self, molecule:MoleculeStorage) -> None:
         """Adds a mole to the inspector"""
-        temp_frame = ttk.Frame(self.moles, borderwidth=1, relief="solid", padding=configs["MoleLinePadY"])
+        temp_frame = ttk.Frame(self.moles_lines.root, borderwidth=1, relief="solid", padding=configs["MoleLinePadY"])
         temp_frame.grid_columnconfigure((0,1,2), weight=1, uniform=1)
         temp_name = tk.Text(temp_frame, height=1)
         
@@ -117,8 +119,6 @@ class App():
             temp_text.insert("2.0", quant_str)
             temp_text.configure(state="disabled")
             temp_text.grid(row=position[0], column=position[1], sticky=tk.NSEW, padx=configs["MoleInfoPadX"], pady=configs["MoleInfoPadY"])
-
-        #print mass
         create_text(temp_frame, molecule, "mass", "g", (1,0))
         create_text(temp_frame, molecule, "moles", "m", (1,1))
         create_text(temp_frame, molecule, "molarmass", "g/m", (1,2))
@@ -126,8 +126,8 @@ class App():
         create_text(temp_frame, molecule, "molarity", "M", (2,1))
         create_text(temp_frame, molecule, "density", "g/L", (2,0))
 
-        temp_frame.grid(row=1, column =0, sticky=tk.NSEW)
-
+        #temp_frame.grid(row=1, column =0, sticky=tk.NSEW)
+        self.moles_lines.add_frame(temp_frame)
 
     def scroll_history(self, _, scrollbar_float, is_pages = None):
         """Function called when ever the scroll bar is called"""
@@ -322,6 +322,8 @@ class UserCommands():
         """Clear the history log"""
         self.app.history.destroy()
         self.app.init_history()
+        self.app.moles.destroy()
+        self.app.init_molecule_inspector()
     
     def print_lines(self, num:int):
         for i in range(num):
@@ -651,7 +653,8 @@ class ElementList():
 
 if __name__ == "__main__":
     try:
-        windll.schore.SetProcessDpiAwareness(1)
+        #windll.schore.SetProcessDpiAwareness(1)
+        pass
     except Exception:
         pass
 

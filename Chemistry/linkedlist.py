@@ -1,7 +1,7 @@
 from __future__ import annotations
 import tkinter as tk
 
-class HistoryList():
+class DoublLinkdList():
     """Class for holding the text lines in the history"""
     def __init__(self):
         self.lst:list[HistoryListItem[int, tk.Text]] = []
@@ -104,7 +104,7 @@ class HistoryListItem():
         self.index:int = index
 
 if __name__ == "__main__":
-    histlist = HistoryList()
+    histlist = DoublLinkdList()
     for i in range(10):
         histlist.append(i)
     for i in range (11,20):
